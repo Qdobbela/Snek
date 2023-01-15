@@ -22,6 +22,7 @@ export default function KidDetailScreen({navigation, route}){
   }
 
   async function removeKid(){
+    console.log("verwijderen");
     const kidRef = doc(db, "kids", kid.id);
     await deleteDoc(kidRef);
     navigation.popToTop();
@@ -29,7 +30,6 @@ export default function KidDetailScreen({navigation, route}){
 
   return(
     <View style={styles.container}>
-      <View style={styles.filler}></View>
       <View style={styles.holder}>
         <Text style={styles.item}>{kid.firstname} {kid.lastname}</Text>
         <Text style={styles.item}>Huidig saldo: {kid.saldo}</Text>
@@ -37,7 +37,6 @@ export default function KidDetailScreen({navigation, route}){
         <Button style={styles.item} mode="contained" onPress={() => addSaldo()}>Toevoegen</Button>
         <Button style={styles.item} mode="contained" onPress={() => removeKid()}>Verwijderen</Button>
       </View>
-      <View style={styles.filler}></View>
     </View>
   );
 

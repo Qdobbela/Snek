@@ -28,10 +28,6 @@ const styles = StyleSheet.create({
   },
   addButton:{
     margin: 10
-  }, 
-  list:{
-    flex: 1,
-    backgroud: "green",
   },
   listholder:{
     flex: 1,

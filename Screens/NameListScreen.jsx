@@ -4,31 +4,40 @@ import { db } from "../firebaseConfig";
 import { Button, Checkbox, Surface } from "react-native-paper";
 import React, { useEffect } from "react";
 import Kid from "../components/Kid";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function NameListScreen({navigation, route}){
   const tak = route.params.name;
   const [leden, setLeden] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   var unique = true;
+  
+  const isFocused = useIsFocused()
 
   const kids = collection(db, "kids");
 
   useEffect(() => {
-    getKids();
-  }, [])
+      getKids();
+    }
+  , [])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('pop', () => {
+      getKids();
+    });
+    return unsubscribe;
+  }, [navigation]);
   
   async function getKids(){
+    setLeden([]);
     const query = await getDocs(fireQuery(kids, where("group", "==", route.params.name), orderBy("firstname")));
     query.forEach((doc) => {
       var lid = doc.data();
       lid.id = doc.id;
       leden.push(lid);
     });
-    setLoading(false);
-    console.log(leden)
+    setLeden(leden);
   }
-
-
 
   async function opslaan(){
     leden.forEach(async (lid) => {

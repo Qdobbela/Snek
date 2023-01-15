@@ -6,13 +6,15 @@ import { db } from "../firebaseConfig";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
-export default function AddKidScreen({navigation, route}){
+export default function AddKidScreen({navigation, route}, props){
   const [fname, setFname] = React.useState("");
   const [lname, setLname] = React.useState("");
   const [tak, setTak] = React.useState("Bevers");
   const [saldo, setSaldo] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
 
   async function saveKid(){
+    setLoading(true);
     try {
       const docRef = await addDoc(collection(db, "kids"), {
         firstname: fname,
@@ -42,7 +44,7 @@ export default function AddKidScreen({navigation, route}){
             <RadioButton.Item style={styles.radio} label="VG" value="VG"></RadioButton.Item>
             <RadioButton.Item style={styles.radio} label="Seniors" value="Seniors"></RadioButton.Item>
           </RadioButton.Group>
-          <Button style={styles.button} mode="contained" onPress={() => saveKid()}>Opslaan</Button>
+          <Button style={styles.button} mode="contained" loading={loading} disabled={loading} onPress={() => saveKid()}>Opslaan</Button>
         </View>
       <View style={styles.filler}></View>
     </KeyboardAwareScrollView>
