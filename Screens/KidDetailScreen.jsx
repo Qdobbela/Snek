@@ -33,9 +33,10 @@ export default function KidDetailScreen({navigation, route}){
       <View style={styles.holder}>
         <Text style={styles.item}>{kid.firstname} {kid.lastname}</Text>
         <Text style={styles.item}>Huidig saldo: {kid.saldo}</Text>
-        <TextInput label="Toe te voegen saldo" style={styles.item} keyboardType="numeric" value={saldoAdd} onChangeText={(value) => setSaldoAdd(parseFloat(value))}></TextInput>
+        <TextInput label="Toe te voegen saldo" style={styles.item} keyboardType="numbers-and-punctuation" value={saldoAdd} onChangeText={(value) => setSaldoAdd(parseFloat(value))}></TextInput>
         <Button style={styles.item} mode="contained" onPress={() => addSaldo()}>Toevoegen</Button>
         <Button style={styles.item} mode="contained" onPress={() => removeKid()}>Verwijderen</Button>
+        <Button style={styles.item} mode="contained" onPress={() => navigation.navigate("VeranderTak", {kid: kid})}>Wijzig tak</Button>
       </View>
     </View>
   );

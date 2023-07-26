@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './Screens/HomeScreen';
 import NameListScreen from './Screens/NameListScreen';
 import AddKidScreen from './Screens/AddKidScreen';
+import VeranderVanTakScreen from './Screens/VeranderVanTakScreen';
 import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import KidDetailScreen from './Screens/KidDetailScreen';
 import {useFonts} from "expo-font";
@@ -79,6 +80,7 @@ export default function App() {
             <Stack.Screen name="Tak" component={NameListScreen} />
             <Stack.Screen name="Add" component={AddKidScreen} />
             <Stack.Screen name="Saldo" component={KidDetailScreen} />
+            <Stack.Screen name="VeranderTak" component={VeranderVanTakScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
