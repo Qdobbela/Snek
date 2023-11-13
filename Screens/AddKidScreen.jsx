@@ -31,7 +31,6 @@ export default function AddKidScreen({navigation, route}, props){
 
   return(
     <KeyboardAwareScrollView style={styles.container}>
-      <View style={styles.filler}></View>
         <View style={styles.holder}>
           <TextInput style={styles.input} label="voornaam" onChangeText={(text) => setFname(text)}></TextInput>
           <TextInput style={styles.input} label="achternaam" onChangeText={(text) => setLname(text)}></TextInput>
@@ -46,7 +45,6 @@ export default function AddKidScreen({navigation, route}, props){
           </RadioButton.Group>
           <Button style={styles.button} mode="contained" loading={loading} disabled={loading} onPress={() => saveKid()}>Opslaan</Button>
         </View>
-      <View style={styles.filler}></View>
     </KeyboardAwareScrollView>
   );
 }
@@ -76,6 +74,7 @@ const styles = StyleSheet.create({
   },
   filler: {
     flex: 1,
+    backgroundColor: "red"
   },
   container: {
     flex: 1

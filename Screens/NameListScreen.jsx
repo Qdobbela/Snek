@@ -41,7 +41,7 @@ export default function NameListScreen({navigation, route}){
 
   async function opslaan(){
     leden.forEach(async (lid) => {
-      console.log(lid.firstname + ": " + lid.koekje + " " + lid.drankje);
+      console.log(lid.firstname + ": " + lid.koekje + " " + lid.drankje + " aanwezigheid:" + lid.aanwezigheidCount);
       var newSaldo = lid.saldo;
       if(lid.koekje){
         newSaldo = newSaldo-0.5;
@@ -53,6 +53,25 @@ export default function NameListScreen({navigation, route}){
       await updateDoc(kidRef, {
           saldo: newSaldo
       });
+
+      if(lid.aanwezigheidCount){
+        if(lid.aanwezigheid){
+          var newCount = lid.aanwezigheidCount + 1;
+          await updateDoc(kidRef, {
+            aanwezigheidCount: newCount
+          });
+        }
+      }else{
+        if(lid.aanwezigheid){
+          await updateDoc(kidRef, {
+            aanwezigheidCount: 1
+          });
+        }else{
+          await updateDoc(kidRef, {
+            aanwezigheidCount: 0
+          });
+        }
+      }
     })
     navigation.popToTop();
   }

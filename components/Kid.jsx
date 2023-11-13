@@ -7,10 +7,14 @@ import { StyleSheet } from "react-native";
 export default function Kid(props){
   const [drankje, setDrankje] = React.useState(false);
   const [koekje, setKoekje] = React.useState(false);
+  const [aanwezigheid, setAanwezigheid] = React.useState(false);
 
   return(
 
     <Surface style={styles.kindCard}>
+      <View style={styles.check}>
+        <Checkbox style={styles.check} status={aanwezigheid? "checked" : "unchecked"} onPress={() =>{setAanwezigheid(!aanwezigheid); props.item.aanwezigheid=!aanwezigheid}}></Checkbox>
+      </View>
       <View style={{flex: 1, alignSelf: "center"}}>
         <Text onPress={() => props.navigation.navigate("Saldo", {item: props.item})} style={styles.kind}>{props.item.firstname} {props.item.lastname}</Text>
       </View>
@@ -38,7 +42,7 @@ const styles = StyleSheet.create({
   },
   kind:{
     flex: 1,
-    marginTop: 10,
+    marginLeft: 10,
     fontFamily: "FOS"
   },
   kindCard: {
