@@ -6,6 +6,10 @@ import React, { useEffect } from "react";
 import Kid from "../components/Kid";
 import { useIsFocused } from "@react-navigation/native";
 
+const KOEKJE_PRIJS = 0.75;
+const DRANKJE_PRIJS = 0.75;
+
+
 export default function NameListScreen({navigation, route}){
   const tak = route.params.name;
   const [leden, setLeden] = React.useState([]);
@@ -44,10 +48,10 @@ export default function NameListScreen({navigation, route}){
       console.log(lid.firstname + ": " + lid.koekje + " " + lid.drankje + " aanwezigheid:" + lid.aanwezigheidCount);
       var newSaldo = lid.saldo;
       if(lid.koekje){
-        newSaldo = newSaldo-0.5;
+        newSaldo = newSaldo-KOEKJE_PRIJS;
       }
       if(lid.drankje){
-        newSaldo = newSaldo-0.5;
+        newSaldo = newSaldo-DRANKJE_PRIJS;
       }
       const kidRef = doc(db, "kids", lid.id);
       await updateDoc(kidRef, {
