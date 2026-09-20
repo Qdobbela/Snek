@@ -8,25 +8,28 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 export default function KidDetailScreen({navigation, route}){
-  const [saldoAdd, setSaldoAdd] = React.useState(0)
+  const [saldoAdd, setSaldoAdd] =  React.useState("")
   const [aanwezigheidAdd, setAanwezigheidAdd] = React.useState(0)
   const kid = route.params.item;
 
   async function addSaldo(aftrekken){
-      if(aftrekken){
-        var newSaldo = kid.saldo - saldoAdd;
-        var newAanwezigheid = kid.aanwezigheidCount - aanwezigheidAdd;
-      } else {
-        var newSaldo = kid.saldo + saldoAdd;
-        var newAanwezigheid = kid.aanwezigheidCount + aanwezigheidAdd;
-      }
-      console.log(kid.saldo + " " + saldoAdd + " " + newSaldo);
-      const kidRef = doc(db, "kids", kid.id);
-      await updateDoc(kidRef, {
-          saldo: newSaldo,
-          aanwezigheidCount: newAanwezigheid
-      });
-      navigation.popToTop();
+
+    const saldo = parseFloat(saldoAdd.replace(",",".")); //Accepting , and .
+
+    if(aftrekken){
+      var newSaldo = kid.saldo - saldo;
+      var newAanwezigheid = kid.aanwezigheidCount - aanwezigheidAdd;
+    } else {
+      var newSaldo = kid.saldo + saldo;
+      var newAanwezigheid = kid.aanwezigheidCount + aanwezigheidAdd;
+    }
+    console.log(kid.saldo + " " + saldo + " " + newSaldo);
+    const kidRef = doc(db, "kids", kid.id);
+    await updateDoc(kidRef, {
+        saldo: newSaldo,
+        aanwezigheidCount: newAanwezigheid
+    });
+    navigation.popToTop();
   }
 
   async function removeKid(){
@@ -37,11 +40,7 @@ export default function KidDetailScreen({navigation, route}){
   }
 
   function liveSaldo(value){
-    var saldo  = parseFloat(value);
-    if(isNaN(saldo)){
-      saldo = 0;
-    }
-    setSaldoAdd((saldo));
+    setSaldoAdd((value));
   }
 
   function liveAanwezigheid(value){
@@ -58,8 +57,8 @@ export default function KidDetailScreen({navigation, route}){
         <Text style={styles.item}>{kid.firstname} {kid.lastname}</Text>
         <Text style={styles.item}>Huidig saldo: {kid.saldo}</Text>
         <Text style={styles.item}>Huidige aanwezigheid: {kid.aanwezigheidCount}</Text>
-        <TextInput label="Toe te voegen saldo" style={styles.item} keyboardType="numbers-and-punctuation" value={saldoAdd} onChangeText={(value) => liveSaldo(value)}></TextInput>
-        <TextInput label="Toe te voegen aanwezigheid" style={styles.item} keyboardType="numbers-and-punctuation" value={aanwezigheidAdd} onChangeText={(value) => liveAanwezigheid(value)}></TextInput>
+        <TextInput label="Toe te voegen saldo" style={styles.item} keyboardType="decimal-pad" value={saldoAdd} onChangeText={(value) => liveSaldo(value)}></TextInput>
+        <TextInput label="Toe te voegen aanwezigheid" style={styles.item} keyboardType="decimal-pad" value={aanwezigheidAdd} onChangeText={(value) => liveAanwezigheid(value)}></TextInput>
         <Button style={styles.item} mode="contained" onPress={() => addSaldo(false)}>Toevoegen</Button>
         <Button style={styles.item} mode="contained" onPress={() => addSaldo(true)}>Aftrekken</Button>
         <Button style={styles.item} mode="contained" onPress={() => removeKid()}>Verwijderen</Button>
